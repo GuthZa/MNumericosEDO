@@ -12,7 +12,14 @@
 %
 %OUTPUTS:
 %   y - vector das aproximações discretas da solução exacta
-%   y(i+1) = y(i)+(h/2)*(f(t(i),y(i))+h*f(t(i),y(i))), i = 0,1,2,...,n-1
+%   % Inclinação no início do intervalo
+%   y1 = f(t(i),y(i));
+% 
+%   % Inclinação no fim do intervalo
+%   y2 = f(t(i+1), y(i)+h*y1);
+% 
+%   % Cálculo da média das inclinações
+%   y(i+1) = y(i) + h/2*(y1+y2);, i = 0,1,2,...,n-1
 %
 %   Trabalho realizado por:
 %   Ana Rita Conceição Pessoa - 2023112690
@@ -26,5 +33,12 @@ y = zeros(1,n+1);
 y(1) = y0;
 
 for i=1:n
-    y(i+1) = y(i)+(h/2)*(f(t(i),y(i))+h*f(t(i),y(i)));
+    % Inclinação no início do intervalo
+    y1 = f(t(i),u(i),v(i));
+
+    % Inclinação no fim do intervalo
+    y2 = f(t(i+1), u(i)+h*y1, v(i)+h*y1);
+
+    % Cálculo da média das inclinações
+    y(i+1) = y(i) + h/2*(y1+y2);
 end
